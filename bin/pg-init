@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -e
+
+initdb tmp/postgres -E utf8 || echo "postgres already initialised"

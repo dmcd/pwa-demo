@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -e
+
+pg_ctl -D tmp/postgres stop -s -m fast || echo "postgres already stopped"
