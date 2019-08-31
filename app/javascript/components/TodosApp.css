@@ -1,0 +1,19 @@
+.container {
+  width: 50%;
+  height: 100%;
+  margin: 0 auto;
+  border-radius: 5px;
+}
+
+@media (max-width: 992px) {
+  .container {
+    width: 100%;
+  }
+}
+
+.header {
+  color: black;
+  padding: 5px;
+  text-align: center;
+  font-family: Tahoma, sans-serif;
+}

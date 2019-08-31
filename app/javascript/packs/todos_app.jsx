@@ -4,8 +4,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-const TodosApp = () => <div>Hello</div>;
+import TodosApp from 'components/TodosApp';
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
