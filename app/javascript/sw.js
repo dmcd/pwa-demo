@@ -7,12 +7,17 @@ if (workbox) {
 }
 
 /**
- * Runtime caching of JSON APIs.
+ * Precache /index html for offline.
+ */
+workbox.precaching.precacheAndRoute([{ url: '/' }]);
+
+/**
+ * Runtime caching of JSON files
  */
 workbox.routing.registerRoute(
   /\.json$/,
   new workbox.strategies.StaleWhileRevalidate({
-    cacheName: 'api'
+    cacheName: 'json'
   })
 );
 
