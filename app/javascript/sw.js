@@ -1,26 +1,17 @@
 // Base service worker extended by workbox in webpack
 
-workbox.skipWaiting();
-workbox.clientsClaim();
-
-/**
- * Precache /users html for offline.
- */
-workbox.precaching.precacheAndRoute([{ url: '/users' }]);
-
-/**
- * Tell workbox to use the "/users" cached HTML for requests navigations that start with "/users"
- */
-workbox.routing.registerNavigationRoute('/users', {
-  whitelist: [new RegExp('^/users')]
-});
+if (workbox) {
+  console.log(`Yay! Workbox is loaded 🎉`);
+} else {
+  console.log(`Boo! Workbox didn't load 😬`);
+}
 
 /**
  * Runtime caching of JSON APIs.
  */
 workbox.routing.registerRoute(
   /\.json$/,
-  workbox.strategies.staleWhileRevalidate({
+  new workbox.strategies.StaleWhileRevalidate({
     cacheName: 'api'
   })
 );
@@ -30,7 +21,7 @@ workbox.routing.registerRoute(
  */
 workbox.routing.registerRoute(
   new RegExp('/assets/.+(?:js|css|jpg)$'),
-  workbox.strategies.cacheFirst({
+  new workbox.strategies.CacheFirst({
     cacheName: 'assets'
   })
 );
