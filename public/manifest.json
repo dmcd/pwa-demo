@@ -1,0 +1,32 @@
+{
+  "icons": [
+    {
+      "src": "icon-64.png",
+      "type": "image/png",
+      "sizes": "64x64"
+    },
+    {
+      "src": "icon-128.png",
+      "type": "image/png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "icon-256.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "name": "PWA Demo",
+  "short_name": "PWA Demo",
+  "start_url": "/",
+  "lang": "en-GB",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#27bbd5",
+  "background_color": "#ffffff"
+}
