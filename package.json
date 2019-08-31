@@ -12,7 +12,8 @@
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "turbolinks": "^5.2.0"
+    "turbolinks": "^5.2.0",
+    "workbox-webpack-plugin": "^4.3.1"
   },
   "version": "0.1.0",
   "devDependencies": {
