@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+set -e
+
+node -v
+
+expected_node_version=`grep nodejs .tool-versions | cut -d " " -f 2`
+actual_node_version=`node -v`
+if [[ "$actual_node_version" != *"$expected_node_version"* ]]; then
+  echo expected node "$expected_node_version" but found node "$actual_node_version"
+  exit 1
+fi
+
+ruby -v
+
+expected_ruby_version=`grep ruby .tool-versions | cut -d " " -f 2`
+actual_ruby_version=`ruby -v`
+if [[ "$actual_ruby_version" != *"$expected_ruby_version"* ]]; then
+  echo expected ruby "$expected_ruby_version" but found ruby "$actual_ruby_version"
+  exit 1
+fi
+
+psql --version
+
+expected_psql_version=`grep postgres .tool-versions | cut -d " " -f 2`
+actual_psql_version=`psql --version`
+if [[ "$actual_psql_version" != *"$expected_psql_version"* ]]; then
+  echo expected postgres "$expected_psql_version" but found postgres "$actual_psql_version"
+  exit 1
+fi
