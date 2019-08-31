@@ -10,7 +10,7 @@ default: &default
   host: <%= ENV['POSTGRESQL_ADDRESS'] || 'localhost' %>
   database: <%= ENV['POSTGRESQL_DATABASE'] %>
   username: <%= ENV['POSTGRESQL_USERNAME'] %>
-  password: <%= ENV['FRESHOBACKEND_DATABASE_PASSWORD'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
   pool: 27
 
 development:

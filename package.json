@@ -1,6 +1,12 @@
 {
   "name": "pwa_demo",
   "private": true,
+  "scripts": {
+    "dev": "./bin/webpack-dev-server",
+    "prod": "npm run prod-build && npm run prod-server",
+    "prod-build": "RAILS_ENV=production rails assets:precompile",
+    "prod-server": "RAILS_ENV=production POSTGRESQL_DATABASE=pwa-demo_development RAILS_SERVE_STATIC_FILES=true rails server"
+  },
   "dependencies": {
     "@babel/preset-react": "^7.0.0",
     "@rails/actioncable": "^6.0.0-alpha",
