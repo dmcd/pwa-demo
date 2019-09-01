@@ -34,8 +34,8 @@ class WebpushNotifications
       auth: subscription.auth,
       vapid: {
         subject: "mailto:sender@example.com",
-        public_key: "BKnUZRw_QMUEMFh-VQ4Myrf0B6sbnxTCDRs5i1K2fgQUZqRyMa4dk2SLsLZn992zdD1L5I5RTgAMmb72E4GRIJQ=",
-        private_key: "TLY7You47L479p8S_g7eZi9dyGa5rw1mh8B3G1kwy5o="
+        public_key: ENV["VAPID_PUBLIC_KEY"],
+        private_key: ENV["VAPID_PRIVATE_KEY"]
       }
     )
   end

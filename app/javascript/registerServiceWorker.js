@@ -15,7 +15,7 @@ export function urlB64ToUint8Array(base64String) {
   return outputArray;
 }
 
-function setupPushManager(registration) {
+function setupPushManager(registration, vapid_public_key) {
   return registration.pushManager.getSubscription().then(subscription => {
     if (subscription) {
       return subscription;
@@ -23,14 +23,12 @@ function setupPushManager(registration) {
 
     return registration.pushManager.subscribe({
       userVisibleOnly: true,
-      applicationServerKey: urlB64ToUint8Array(
-        'BKnUZRw_QMUEMFh-VQ4Myrf0B6sbnxTCDRs5i1K2fgQUZqRyMa4dk2SLsLZn992zdD1L5I5RTgAMmb72E4GRIJQ='
-      )
+      applicationServerKey: urlB64ToUint8Array(vapid_public_key)
     });
   });
 }
 
-export default function registerServiceWorker() {
+export default function registerServiceWorker(vapid_public_key) {
   if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
     window.addEventListener('load', () => {
       navigator.serviceWorker
@@ -38,9 +36,11 @@ export default function registerServiceWorker() {
         .then(registration => {
           console.log('SW registered: ', registration);
 
-          return setupPushManager(registration).then(subscription => {
-            return api.subscribeForWebPush({ subscription: subscription });
-          });
+          return setupPushManager(registration, vapid_public_key).then(
+            subscription => {
+              return api.subscribeForWebPush({ subscription: subscription });
+            }
+          );
         })
         .catch(registrationError => {
           console.log('SW registration failed: ', registrationError);

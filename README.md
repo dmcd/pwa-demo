@@ -4,7 +4,11 @@ A Todo List with simple multi-user editing using push notifications.
 
 ![](demo.gif)
 
-## Development
+## Setup
+
+You need to generate your own VAPID keys for push notifications to work. See how to do it using the `web-push` library's [docs](https://github.com/web-push-libs/web-push#usage).
+
+You need to set both `VAPID_PUBLIC_KEY` and `VAPID_PRIVATE_KEY` variables.
 
 Dependencies:
 

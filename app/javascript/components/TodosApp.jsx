@@ -8,7 +8,7 @@ class TodosApp extends Component {
     super(props);
 
     const {
-      params: { user_id, user_email, user_token }
+      params: { user_id, user_email, user_token, vapid_public_key }
     } = this.props; 
 
     const localStorageData = JSON.stringify({
@@ -23,7 +23,7 @@ class TodosApp extends Component {
 
     window.localStorage.setItem('pwa-demo:session', `${localStorageData}`);
 
-    registerServiceWorker();
+    registerServiceWorker(vapid_public_key);
   }
 
   render() {
