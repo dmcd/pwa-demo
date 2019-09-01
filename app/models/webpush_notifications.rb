@@ -11,7 +11,8 @@ class WebpushNotifications
         push_message(
           subscription: subscription,
           title: title,
-          body: "#{action} by #{user.email}"
+          body: "#{action} by #{user.email}",
+          type: action
         )
       end
     end
@@ -19,10 +20,11 @@ class WebpushNotifications
 
   private
 
-  def self.push_message(subscription:, title:, body:)
+  def self.push_message(subscription:, title:, body:, type:)
     message = {
       title: title,
       body: body,
+      type: type
     }
 
     Webpush.payload_send(

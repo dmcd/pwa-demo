@@ -16,6 +16,9 @@ self.addEventListener('push', function(event) {
       icon: icon
     })
   );
+
+  const channel = new BroadcastChannel('sw-messages');
+  channel.postMessage({ type: json.type });
 });
 
 /**
