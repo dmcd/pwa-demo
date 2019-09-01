@@ -2,16 +2,16 @@ require 'webpush'
 
 class WebpushNotifications
 
-  def self.notify_users_of_new_todo(todo:, created_by:)
-    User.all.each do |user|
-      next if user == created_by
+  def self.publish_user_action(user:, title:, action:)
+    User.all.each do |other|
+      next if other == user
 
-      subscription = WebpushSubscription.find_by(user: user)
+      subscription = WebpushSubscription.find_by(user: other)
       if subscription
         push_message(
           subscription: subscription,
-          title: "#{todo.title}",
-          body: "Added by #{created_by.email}"
+          title: title,
+          body: "#{action} by #{user.email}"
         )
       end
     end

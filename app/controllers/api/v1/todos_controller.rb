@@ -8,9 +8,10 @@ module Api
 
       def create
         todo = Todo.create(todo_param)
-        WebpushNotifications.notify_users_of_new_todo(
-          todo: todo, 
-          created_by: current_user
+        WebpushNotifications.publish_user_action(
+          user: current_user,
+          title: "#{todo.title}",
+          action: "Added",
         )
         render json: todo
       end
@@ -18,11 +19,21 @@ module Api
       def update
         todo = Todo.find(params[:id])
         todo.update_attributes(todo_param)
+        WebpushNotifications.publish_user_action(
+          user: current_user,
+          title: "#{todo.title}",
+          action: todo.done ? "Completed" : "Added",
+        )
         render json: todo
       end
 
       def destroy
         todo = Todo.find(params[:id])
+        WebpushNotifications.publish_user_action(
+          user: current_user,
+          title: "#{todo.title}",
+          action: "Deleted",
+        )
         todo.destroy
         head :no_content, status: :ok
       end
