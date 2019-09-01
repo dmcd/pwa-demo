@@ -6,6 +6,18 @@ if (workbox) {
   console.log(`Boo! Workbox didn't load 😬`);
 }
 
+self.addEventListener('push', function(event) {
+  let json = event.data.json();
+  let icon = 'icon-128.png';
+
+  event.waitUntil(
+    self.registration.showNotification(json.title, {
+      body: json.body,
+      icon: icon
+    })
+  );
+});
+
 /**
  * Runtime caching of JSON files
  */

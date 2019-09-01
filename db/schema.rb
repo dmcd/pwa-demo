@@ -36,4 +36,15 @@ ActiveRecord::Schema.define(version: 2019_08_31_222106) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "webpush_subscriptions", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "endpoint", null: false
+    t.string "p256dh", null: false
+    t.string "auth", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_webpush_subscriptions_on_user_id", unique: true
+  end
+
+  add_foreign_key "webpush_subscriptions", "users"
 end

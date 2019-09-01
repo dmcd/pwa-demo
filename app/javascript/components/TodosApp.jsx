@@ -1,3 +1,4 @@
+import registerServiceWorker from '../registerServiceWorker';
 import React, { Component } from 'react';
 import TodosContainer from './TodosContainer';
 import './TodosApp.css';
@@ -22,6 +23,7 @@ class TodosApp extends Component {
 
     window.localStorage.setItem('pwa-demo:session', `${localStorageData}`);
 
+    registerServiceWorker();
   }
 
   render() {

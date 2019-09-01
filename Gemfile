@@ -6,6 +6,7 @@ ruby '2.6.1'
 gem 'devise'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'pg'
+gem 'webpush'
 gem 'simple_token_authentication'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

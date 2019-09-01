@@ -21,8 +21,8 @@ export const apiAxios = () => {
   return apiAxiosSingleton;
 };
 
-const registerForWebPush = async subscription => {
-  return apiAxios().post('/api/v1/webpush/register', subscription);
+const subscribeForWebPush = async subscription => {
+  return apiAxios().post('/api/v1/webpush/subscribe', subscription);
 };
 
 const fetchTodos = async => {
@@ -37,12 +37,12 @@ const deleteTodo = async id => {
   return apiAxios().delete(`/api/v1/todos/${id}`);
 };
 
-const updateTodo = async (id,todo) => {
+const updateTodo = async (id, todo) => {
   return apiAxios().put(`/api/v1/todos/${id}`, { todo: todo });
 };
 
 export default {
-  registerForWebPush,
+  subscribeForWebPush,
   fetchTodos,
   createTodo,
   deleteTodo,
