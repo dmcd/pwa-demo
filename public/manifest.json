@@ -21,8 +21,8 @@
       "sizes": "512x512"
     }
   ],
-  "name": "PWA Demo",
-  "short_name": "PWA Demo",
+  "name": "Todos",
+  "short_name": "Todos",
   "start_url": "/",
   "lang": "en-GB",
   "display": "standalone",
