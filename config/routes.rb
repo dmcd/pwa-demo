@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  # devise_for :users 
-  devise_for :users, :skip => [:registrations] 
+  devise_for :users, :skip => [:registrations], controllers: {
+    sessions: 'users/sessions'
+  }
+
   as :user do
     get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
     put 'users' => 'devise/registrations#update', :as => 'user_registration'
@@ -12,7 +14,9 @@ Rails.application.routes.draw do
     resources :todos, only: [:index]
   end
 
-  scope '/api/v1' do
-    resources :todos
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      resources :todos
+    end
   end
 end

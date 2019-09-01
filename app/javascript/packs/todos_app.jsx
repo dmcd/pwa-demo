@@ -8,7 +8,7 @@ import TodosApp from 'components/TodosApp';
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    <TodosApp />,
+    <TodosApp params={global.routeParamsFromRails} />,
     document.body.appendChild(document.createElement('div'))
   );
 });
