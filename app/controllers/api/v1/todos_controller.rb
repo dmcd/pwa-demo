@@ -8,6 +8,10 @@ module Api
 
       def create
         todo = Todo.create(todo_param)
+        WebpushNotifications.notify_users_of_new_todo(
+          todo: todo, 
+          created_by: current_user
+        )
         render json: todo
       end
 

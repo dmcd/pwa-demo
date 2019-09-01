@@ -10,8 +10,8 @@ class WebpushNotifications
       if subscription
         push_message(
           subscription: subscription,
-          title: "New Todo",
-          body: "#{created_by.email} created a new todo: '#{todo.title}'"
+          title: "#{todo.title}",
+          body: "Added by #{created_by.email}"
         )
       end
     end
