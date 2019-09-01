@@ -1,6 +1,6 @@
 import api from 'api/api';
 
-export function urlB64ToUint8Array(base64String) {
+function urlBase64ToUint8Array(base64String) {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
   const base64 = (base64String + padding)
     .replace(/\-/g, '+')
@@ -15,7 +15,9 @@ export function urlB64ToUint8Array(base64String) {
   return outputArray;
 }
 
-function setupPushManager(registration, vapid_public_key) {
+function setupPushManager(registration, vapidPublicKey) {
+  const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
+
   return registration.pushManager.getSubscription().then(subscription => {
     if (subscription) {
       return subscription;
@@ -23,12 +25,12 @@ function setupPushManager(registration, vapid_public_key) {
 
     return registration.pushManager.subscribe({
       userVisibleOnly: true,
-      applicationServerKey: urlB64ToUint8Array(vapid_public_key)
+      applicationServerKey: convertedVapidKey
     });
   });
 }
 
-export default function registerServiceWorker(vapid_public_key) {
+export default function registerServiceWorker(vapidPublicKey) {
   if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
     window.addEventListener('load', () => {
       navigator.serviceWorker
@@ -36,11 +38,15 @@ export default function registerServiceWorker(vapid_public_key) {
         .then(registration => {
           console.log('SW registered: ', registration);
 
-          return setupPushManager(registration, vapid_public_key).then(
-            subscription => {
+          return setupPushManager(registration, vapidPublicKey)
+            .then(subscription => {
+              console.log('Push manager subscribed: ', subscription);
+
               return api.subscribeForWebPush({ subscription: subscription });
-            }
-          );
+            })
+            .catch(error => {
+              console.log('Push manager subscription failed: ', error);
+            });
         })
         .catch(registrationError => {
           console.log('SW registration failed: ', registrationError);
@@ -65,4 +71,12 @@ export default function registerServiceWorker(vapid_public_key) {
       }
     });
   }
+
+  const channel = new BroadcastChannel('sw-messages');
+  channel.addEventListener('message', event => {
+    if ('PushSubscriptionChange' === event.data.type) {
+      console.log(`Received subcription change event`);
+      return api.subscribeForWebPush({ subscription: event.data.subscription });
+    }
+  });
 }

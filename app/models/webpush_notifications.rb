@@ -38,5 +38,7 @@ class WebpushNotifications
         private_key: ENV["VAPID_PRIVATE_KEY"]
       }
     )
+  rescue StandardError => error
+    puts error
   end
 end

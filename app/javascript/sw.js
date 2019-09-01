@@ -21,6 +21,17 @@ self.addEventListener('push', function(event) {
   channel.postMessage({ type: json.type });
 });
 
+self.addEventListener('pushsubscriptionchange', event => {
+  event.waitUntil(
+    self.registration.pushManager
+      .subscribe(event.oldSubscription.options)
+      .then(subscription => {
+        const channel = new BroadcastChannel('sw-messages');
+        channel.postMessage({ type: 'PushSubscriptionChange', subscription });
+      })
+  );
+});
+
 /**
  * Runtime caching of JSON files
  */
