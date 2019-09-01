@@ -7,11 +7,6 @@ if (workbox) {
 }
 
 /**
- * Precache /index html for offline.
- */
-workbox.precaching.precacheAndRoute([{ url: '/' }]);
-
-/**
  * Runtime caching of JSON files
  */
 workbox.routing.registerRoute(
