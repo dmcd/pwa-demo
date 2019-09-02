@@ -4,6 +4,10 @@ A Todo List with simple multi-user editing using push notifications.
 
 ![](demo.gif)
 
+## Small caveat
+
+[PushManager](https://developer.mozilla.org/en-US/docs/Web/API/PushManager) and [BroadcastChannel](https://developer.mozilla.org/en-US/docs/Web/API/BroadcastChannel) don't work on Safari yet:
+
 ## Setup
 
 You need to generate your own VAPID keys for push notifications to work. See how to do it using the `web-push` library's [docs](https://github.com/web-push-libs/web-push#usage).
