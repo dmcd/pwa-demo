@@ -10,15 +10,17 @@ self.addEventListener('push', function(event) {
   let json = event.data.json();
   let icon = 'icon-128.png';
 
-  event.waitUntil(
-    self.registration.showNotification(json.title, {
-      body: json.body,
-      icon: icon
-    })
-  );
+  if (['Added', 'Completed'].includes(json.action)) {
+    event.waitUntil(
+      self.registration.showNotification(`${json.action} ${json.title}`, {
+        body: json.user,
+        icon: icon
+      })
+    );
+  }
 
   const channel = new BroadcastChannel('sw-messages');
-  channel.postMessage({ type: json.type });
+  channel.postMessage({ type: 'TodoChange' });
 });
 
 self.addEventListener('pushsubscriptionchange', event => {

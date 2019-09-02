@@ -14,8 +14,8 @@ class TodosContainer extends Component {
 
     const channel = new BroadcastChannel('sw-messages');
     channel.addEventListener('message', event => {
-      console.log(`Received event from service worker: ${event}`);
-      if (['Added', 'Completed', 'Deleted'].includes(event.data.type)) {
+      console.log(`Received event from service worker: ${event.data.type}`);
+      if ('TodoChange' === event.data.type) {
         this.getTodos();
       }
     });
