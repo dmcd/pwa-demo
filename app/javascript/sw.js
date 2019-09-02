@@ -34,23 +34,10 @@ self.addEventListener('pushsubscriptionchange', event => {
   );
 });
 
-/**
- * Runtime caching of JSON files
- */
 workbox.routing.registerRoute(
-  /\.json$/,
-  new workbox.strategies.StaleWhileRevalidate({
-    cacheName: 'json'
-  })
-);
-
-/**
- * Runtime caching of asset pipeline files.
- */
-workbox.routing.registerRoute(
-  new RegExp('/assets/.+(?:js|css|jpg)$'),
-  new workbox.strategies.CacheFirst({
-    cacheName: 'assets'
+  new RegExp('.*'),
+  new workbox.strategies.NetworkFirst({
+    cacheName: 'default'
   })
 );
 
