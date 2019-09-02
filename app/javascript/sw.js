@@ -19,8 +19,10 @@ self.addEventListener('push', function(event) {
     );
   }
 
-  const channel = new BroadcastChannel('sw-messages');
-  channel.postMessage({ type: 'TodoChange' });
+  if ('BroadcastChannel' in window) {
+    const channel = new BroadcastChannel('sw-messages');
+    channel.postMessage({ type: 'TodoChange' });
+  }
 });
 
 self.addEventListener('pushsubscriptionchange', event => {
@@ -28,8 +30,10 @@ self.addEventListener('pushsubscriptionchange', event => {
     self.registration.pushManager
       .subscribe(event.oldSubscription.options)
       .then(subscription => {
-        const channel = new BroadcastChannel('sw-messages');
-        channel.postMessage({ type: 'PushSubscriptionChange', subscription });
+        if ('BroadcastChannel' in window) {
+          const channel = new BroadcastChannel('sw-messages');
+          channel.postMessage({ type: 'PushSubscriptionChange', subscription });
+        }
       })
   );
 });

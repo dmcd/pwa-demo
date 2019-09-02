@@ -72,11 +72,15 @@ export default function registerServiceWorker(vapidPublicKey) {
     });
   }
 
-  const channel = new BroadcastChannel('sw-messages');
-  channel.addEventListener('message', event => {
-    if ('PushSubscriptionChange' === event.data.type) {
-      console.log(`Received subcription change event`);
-      return api.subscribeForWebPush({ subscription: event.data.subscription });
-    }
-  });
+  if ('BroadcastChannel' in window) {
+    const channel = new BroadcastChannel('sw-messages');
+    channel.addEventListener('message', event => {
+      if ('PushSubscriptionChange' === event.data.type) {
+        console.log(`Received subcription change event`);
+        return api.subscribeForWebPush({
+          subscription: event.data.subscription
+        });
+      }
+    });
+  }
 }

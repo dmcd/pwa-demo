@@ -12,13 +12,15 @@ class TodosContainer extends Component {
 
     this.handleChangeInputChanged = this.handleChangeInputChanged.bind(this);
 
-    const channel = new BroadcastChannel('sw-messages');
-    channel.addEventListener('message', event => {
-      console.log(`Received event from service worker: ${event.data.type}`);
-      if ('TodoChange' === event.data.type) {
-        this.getTodos();
-      }
-    });
+    if ('BroadcastChannel' in window) {
+      const channel = new BroadcastChannel('sw-messages');
+      channel.addEventListener('message', event => {
+        console.log(`Received event from service worker: ${event.data.type}`);
+        if ('TodoChange' === event.data.type) {
+          this.getTodos();
+        }
+      });
+    }
   }
 
   getTodos() {
