@@ -1,6 +1,6 @@
 # Progressive Web App Demo using Rails and React
 
-A Todo List with simple multi-user editing using webpush.
+A Todo List with simple multi-user editing using web-push.
 
 ![](demo.gif)
 
