@@ -19,7 +19,7 @@ self.addEventListener('push', function(event) {
     );
   }
 
-  if ('BroadcastChannel' in window) {
+  if ('BroadcastChannel' in self) {
     const channel = new BroadcastChannel('sw-messages');
     channel.postMessage({ type: 'TodoChange' });
   }
@@ -30,7 +30,7 @@ self.addEventListener('pushsubscriptionchange', event => {
     self.registration.pushManager
       .subscribe(event.oldSubscription.options)
       .then(subscription => {
-        if ('BroadcastChannel' in window) {
+        if ('BroadcastChannel' in self) {
           const channel = new BroadcastChannel('sw-messages');
           channel.postMessage({ type: 'PushSubscriptionChange', subscription });
         }
