@@ -1,6 +1,6 @@
 import registerServiceWorker from '../registerServiceWorker';
 import React, { Component } from 'react';
-import TodosContainer from './TodosContainer';
+import Todos from './Todos';
 import './TodosApp.css';
 
 class TodosApp extends Component {
@@ -9,7 +9,7 @@ class TodosApp extends Component {
 
     const {
       params: { user_id, user_email, user_token, vapid_public_key }
-    } = this.props; 
+    } = this.props;
 
     const localStorageData = JSON.stringify({
       authenticated: {
@@ -32,7 +32,7 @@ class TodosApp extends Component {
         <div className="header">
           <h1>Todo List</h1>
         </div>
-        <TodosContainer />
+        <Todos />
       </div>
     );
   }

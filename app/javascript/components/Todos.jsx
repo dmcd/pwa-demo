@@ -1,8 +1,8 @@
 import api from 'api/api';
 import React, { Component } from 'react';
-import './TodosContainer.css';
+import './Todos.css';
 
-class TodosContainer extends Component {
+class Todos extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -10,7 +10,7 @@ class TodosContainer extends Component {
       inputValue: ''
     };
 
-    this.handleChangeInputChanged = this.handleChangeInputChanged.bind(this);
+    this.handleInputChanged = this.handleInputChanged.bind(this);
 
     if ('BroadcastChannel' in window) {
       const channel = new BroadcastChannel('sw-messages');
@@ -23,36 +23,34 @@ class TodosContainer extends Component {
     }
   }
 
+  componentDidMount() {
+    this.getTodos();
+  }
+
   getTodos() {
     api.fetchTodos().then(response => {
       this.setState({ todos: response.data });
     });
   }
 
-  createTodo = e => {
+  handleInputChanged(event) {
+    this.setState({ inputValue: event.target.value });
+  }
+
+  handleInputKeyPress = e => {
     if (e.key === 'Enter' && e.target.value.length > 0) {
-      api.createTodo({ title: e.target.value }).then(response => {
-        const { todos } = this.state;
-        this.setState({
-          todos: [response.data, ...todos],
-          inputValue: ''
-        });
-      });
+      this.createTodo(e.target.value);
     }
   };
 
-  deleteTodo = id => {
-    api.deleteTodo(id).then(response => {
+  createTodo(title) {
+    api.createTodo({ title }).then(response => {
       const { todos } = this.state;
-      const todoIndex = todos.findIndex(x => x.id === id);
       this.setState({
-        todos: [...todos.slice(0, todoIndex), ...todos.slice(todoIndex + 1)]
+        todos: [response.data, ...todos],
+        inputValue: ''
       });
     });
-  };
-
-  handleChangeInputChanged(event) {
-    this.setState({ inputValue: event.target.value });
   }
 
   toggleTodo(event, id) {
@@ -71,9 +69,15 @@ class TodosContainer extends Component {
     });
   }
 
-  componentDidMount() {
-    this.getTodos();
-  }
+  deleteTodo = id => {
+    api.deleteTodo(id).then(response => {
+      const { todos } = this.state;
+      const todoIndex = todos.findIndex(x => x.id === id);
+      this.setState({
+        todos: [...todos.slice(0, todoIndex), ...todos.slice(todoIndex + 1)]
+      });
+    });
+  };
 
   render() {
     const { inputValue } = this.state;
@@ -86,8 +90,8 @@ class TodosContainer extends Component {
             placeholder="Add a task"
             maxLength="50"
             value={inputValue}
-            onKeyPress={this.createTodo}
-            onChange={this.handleChangeInputChanged}
+            onKeyPress={this.handleInputKeyPress}
+            onChange={this.handleInputChanged}
           />
         </div>
         <div className="listWrapper">
@@ -118,4 +122,4 @@ class TodosContainer extends Component {
   }
 }
 
-export default TodosContainer;
+export default Todos;
